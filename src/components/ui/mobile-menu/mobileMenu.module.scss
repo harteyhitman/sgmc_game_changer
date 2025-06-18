@@ -1,0 +1,173 @@
+@use "../../../styles/abstract/variables" as *;
+@use "../../../styles/abstract/mixins" as *;
+
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+  position: relative;
+  width: 24px;
+  height: 24px;
+
+  @include respond-to(tablet) {
+    display: block;
+  }
+
+  .menuIcon {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: $pure-white;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background-color: $pure-white;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    &::before {
+      top: -6px;
+    }
+
+    &::after {
+      bottom: -6px;
+    }
+  }
+
+  &.open {
+    .menuIcon {
+      background-color: transparent;
+
+      &::before {
+        top: 0;
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        bottom: 0;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba($primary-dark, 0.98);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.mobileMenuContent {
+  width: 100%;
+  max-width: 400px;
+  padding: $spacing-unit * 4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 6;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 3;
+
+  &Item {
+    color: $pure-white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: $spacing-unit * 1.5 0;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: $spacing-unit * 1;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $primary-blue;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}
+
+.mobileWallet {
+  margin-top: $spacing-unit * 4;
+}
+
+.mobileConnectButton {
+  width: 100%;
+  background-color: $primary-blue;
+  color: $pure-white;
+  border: none;
+  padding: $spacing-unit * 2;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-blue, 10%);
+  }
+}
+
+.mobileWalletConnected {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 2;
+}
+
+.mobileWalletAddress {
+  background-color: rgba($primary-blue, 0.2);
+  padding: $spacing-unit * 1.5;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.mobileDisconnectButton {
+  width: 100%;
+  background: none;
+  border: 1px solid $warning-red;
+  color: $warning-red;
+  padding: $spacing-unit * 2;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba($warning-red, 0.1);
+  }
+}
