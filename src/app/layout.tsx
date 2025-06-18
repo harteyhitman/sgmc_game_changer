@@ -18,7 +18,7 @@ export default function RootLayout({
         <Web3Provider>
           <Navbar />
           <MobileMenu />
-          <main>
+          <main >
             {children}
           </main>
           <Footer />

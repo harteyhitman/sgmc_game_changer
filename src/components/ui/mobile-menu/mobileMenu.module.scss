@@ -12,7 +12,7 @@
   height: 24px;
 
   @include respond-to(tablet) {
-    display: block;
+    display: none;
   }
 
   .menuIcon {

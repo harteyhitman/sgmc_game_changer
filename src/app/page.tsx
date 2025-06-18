@@ -1,5 +1,4 @@
 import Landingpage from '@/sections'
-import React from 'react'
 
 const Home = () => {
   return (
