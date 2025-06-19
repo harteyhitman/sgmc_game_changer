@@ -73,11 +73,11 @@ export default function HeroSection() {
         </p>
         
         <div className={styles.ctaContainer}>
-          <Button className={styles.ctaPrimary}>
+          <Button size='large'  className={styles.ctaPrimary}>
             <span>Get Started</span>
             <div className={styles.hoverEffect}></div>
           </Button>
-          <Button className={styles.ctaSecondary}>
+          <Button size='large' className={styles.ctaSecondary}>
             <span>Learn More</span>
             <div className={styles.hoverEffect}></div>
           </Button>

@@ -82,12 +82,13 @@
 
     @include respond-to(mobile) {
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 }
 
 .ctaPrimary, .ctaSecondary {
   position: relative;
-  padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
   border: none;
@@ -96,6 +97,11 @@
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   
+  @include respond-to (mobile){
+    width: 200px;
+    height: 40px;
+    font-size: 0.7rem;
+  }
   span {
     position: relative;
     z-index: 2;

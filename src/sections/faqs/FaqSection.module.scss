@@ -40,7 +40,7 @@ background-color: color.adjust($primary-dark, $lightness: -4%);
   font-weight: 700;
 
   @include respond-to(tablet) {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     margin-bottom: $spacing-unit * 4;
   }
 
