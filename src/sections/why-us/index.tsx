@@ -1,7 +1,6 @@
 'use client'
 import { useRef, useEffect } from 'react';
 import styles from './whyUs.module.scss';
-import { FcAlarmClock } from "react-icons/fc";
 
 export default function WhyUsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
