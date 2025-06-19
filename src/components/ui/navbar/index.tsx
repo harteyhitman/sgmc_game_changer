@@ -41,7 +41,7 @@ export default function Navbar() {
     >
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoMain}>SGMC</span>
+          <span className={styles.logoMain}>$GMC</span>
           <span className={styles.logoPulse}></span>
         </Link>
 

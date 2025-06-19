@@ -61,7 +61,7 @@ export default function HeroSection() {
       {/* Content container */}
       <div className={styles.content}>
         <h1 className={styles.title}>
-          <span className={styles.titleMain}>SGMC</span>
+          <span className={styles.titleMain}>$GMC</span>
           <span className={styles.titleMain}>Change The Game</span>
           <span className={styles.titleSecondary}>No More Rugs</span>
         </h1>

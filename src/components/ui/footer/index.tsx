@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.brand}>
-          <span className={styles.logo}>SGMC</span>
+          <span className={styles.logo}>$GMC</span>
           <p className={styles.tagline}>CHANGE THE GAME+</p>
         </div>
 
@@ -35,7 +35,7 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <p className={styles.copyright}>© {new Date().getFullYear()} SGMC. All rights reserved.</p>
+        <p className={styles.copyright}>© {new Date().getFullYear()} $GMC. All rights reserved.</p>
         <div className={styles.legalLinks}>
           <Link href="#" className={styles.legalLink}>Terms</Link>
           <Link href="#" className={styles.legalLink}>Privacy</Link>

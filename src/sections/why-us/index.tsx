@@ -61,7 +61,7 @@ export default function WhyUsSection() {
         <div className={styles.header}>
           <h2 className={styles.title}>
             <span className={styles.titleLine}>Why Choose</span>
-            <span className={styles.titleLineAccent}>SGMC</span>
+            <span className={styles.titleLineAccent}>$GMC</span>
           </h2>
           <div className={styles.titleUnderline}></div>
           <p className={styles.subtitle}>

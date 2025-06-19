@@ -1,0 +1,229 @@
+@use "../../styles/abstract/variables"as *;
+@use "../../styles/abstract/mixins" as *;
+
+.roadmap {
+  padding: $spacing-unit * 10 0;
+  background-color: darken($primary-dark, 2%);
+  position: relative;
+  overflow: hidden;
+
+  @include respond-to(tablet) {
+    padding: $spacing-unit * 6 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba($primary-blue, 0.1) 0%, transparent 50%);
+    z-index: 0;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-unit * 4;
+}
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: $spacing-unit * 6;
+  color: $pure-white;
+  font-weight: 700;
+
+  @include respond-to(tablet) {
+    font-size: 2.5rem;
+    margin-bottom: $spacing-unit * 4;
+  }
+
+  .highlight {
+    color: $primary-blue;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-blue, transparent);
+    }
+  }
+}
+
+.timeline {
+  position: relative;
+  padding-left: $spacing-unit * 3;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(to bottom, $primary-blue, rgba($primary-blue, 0.3));
+  }
+
+  @include respond-to(tablet) {
+    padding-left: $spacing-unit * 2;
+  }
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: $spacing-unit * 6;
+  opacity: 0;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -$spacing-unit * 3.5;
+    top: 0;
+    width: $spacing-unit * 2;
+    height: $spacing-unit * 2;
+    border-radius: 50%;
+    background: $primary-dark;
+    border: 2px solid $primary-blue;
+    z-index: 2;
+
+    @include respond-to(tablet) {
+      left: -$spacing-unit * 2.5;
+      width: $spacing-unit * 1.5;
+      height: $spacing-unit * 1.5;
+    }
+  }
+
+  &.completed {
+    &::before {
+      background: $primary-blue;
+    }
+
+    .timelineHeader {
+      .quarter {
+        color: rgba($pure-white, 0.8);
+      }
+    }
+  }
+}
+
+.timelineContent {
+  background: rgba($pure-white, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: $spacing-unit * 4;
+  border: 1px solid rgba($pure-white, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    border-color: rgba($primary-blue, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 102, 255, 0.2);
+  }
+
+  @include respond-to(tablet) {
+    padding: $spacing-unit * 3;
+  }
+}
+
+.timelineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-unit * 3;
+}
+
+.quarter {
+  font-size: 1.5rem;
+  color: $pure-white;
+  font-weight: 600;
+  margin: 0;
+
+  @include respond-to(tablet) {
+    font-size: 1.25rem;
+  }
+}
+
+.statusIndicator {
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: $accent-green;
+  }
+
+  .pulseDot {
+    width: 16px;
+    height: 16px;
+    background-color: $primary-blue;
+    border-radius: 50%;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($primary-blue, 0.6);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+  }
+}
+
+.milestones {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.milestone {
+  color: rgba($pure-white, 0.8);
+  padding: $spacing-unit 0;
+  position: relative;
+  padding-left: $spacing-unit * 3;
+  line-height: 1.6;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: $spacing-unit * 1.5;
+    width: $spacing-unit;
+    height: $spacing-unit;
+    border-radius: 2px;
+    background-color: $primary-blue;
+    transform: rotate(45deg);
+  }
+
+  @include respond-to(tablet) {
+    font-size: 0.95rem;
+    padding-left: $spacing-unit * 2;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}

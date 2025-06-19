@@ -99,7 +99,7 @@ useEffect(() => {
         <div className={styles.header}>
           <h2 className={styles.title}>
             <span className={styles.titleLine}>About</span>
-            <span className={styles.titleLineAccent}>SGMC</span>
+            <span className={styles.titleLineAccent}>$GMC</span>
           </h2>
           <div className={styles.titleUnderline}></div>
           <p className={styles.subtitle}>
@@ -111,7 +111,7 @@ useEffect(() => {
         <div className={styles.content}>
           <div className={styles.textContent}>
             <p className={styles.paragraph}>
-              SGMC is at the forefront of blockchain innovation, combining 
+              $GMC is at the forefront of blockchain innovation, combining 
               cutting-edge technology with user-centric design to create 
               solutions that empower individuals and businesses alike.
             </p>
