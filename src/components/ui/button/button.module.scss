@@ -1,5 +1,6 @@
-@use "../../../styles/abstract/variables" as *;
-@use "../../../styles/abstract/mixins" as *;
+@use "sass:color";
+@use "@/styles/abstract/variables" as *;
+@use "@/styles/abstract/mixins" as *;
 
 .button {
   border: none;
@@ -39,7 +40,7 @@
     color: $pure-white;
 
     &:hover:not(:disabled) {
-      background-color: darken($primary-blue, 10%);
+background-color: color.adjust($primary-blue, $lightness: -10%);
       transform: translateY(-1px);
     }
   }
@@ -49,7 +50,7 @@
     color: $primary-dark;
 
     &:hover:not(:disabled) {
-      background-color: darken($accent-green, 10%);
+background-color: color.adjust($accent-green, $lightness: -10%);
       transform: translateY(-1px);
     }
   }
@@ -70,7 +71,7 @@
     color: $pure-white;
 
     &:hover:not(:disabled) {
-      background-color: darken($warning-red, 10%);
+background-color: color.adjust($warning-red, $lightness: -10%);
     }
   }
 }

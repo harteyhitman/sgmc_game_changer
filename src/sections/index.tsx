@@ -4,6 +4,8 @@ import AboutSection from './about-us'
 import WhyUsSection from './why-us'
 import ServicesSection from './services'
 import RoadmapSection from './road-map'
+import TokenSalesSection from './token-sales'
+import FaqSection from './faqs'
 
 const Landingpage = () => {
   return (
@@ -13,6 +15,8 @@ const Landingpage = () => {
         <WhyUsSection />
         <ServicesSection />
         <RoadmapSection />
+        <TokenSalesSection />
+        <FaqSection />
     </div>
   )
 }

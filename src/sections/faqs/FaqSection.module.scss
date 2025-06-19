@@ -1,0 +1,151 @@
+@use "sass:color";
+@use "../../styles/abstract/variables" as *;
+@use "../../styles/abstract/mixins" as *;
+
+.faq {
+  padding: $spacing-unit * 10 0;
+background-color: color.adjust($primary-dark, $lightness: -4%);
+  position: relative;
+  overflow: hidden;
+
+  @include respond-to(tablet) {
+    padding: $spacing-unit * 6 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 70%, rgba($primary-blue, 0.05) 0%, transparent 50%);
+    z-index: 0;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 $spacing-unit * 4;
+}
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: $spacing-unit * 6;
+  color: $pure-white;
+  font-weight: 700;
+
+  @include respond-to(tablet) {
+    font-size: 2.5rem;
+    margin-bottom: $spacing-unit * 4;
+  }
+
+  .highlight {
+    color: $primary-blue;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-blue, transparent);
+    }
+  }
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 2;
+}
+
+.accordionItem {
+  background: rgba($pure-white, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  border: 1px solid rgba($pure-white, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.active {
+    border-color: rgba($primary-blue, 0.5);
+    box-shadow: 0 8px 25px rgba(0, 102, 255, 0.15);
+  }
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: $spacing-unit * 3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: $spacing-unit * 2;
+
+  @include respond-to(tablet) {
+    padding: $spacing-unit * 2;
+  }
+}
+
+.question {
+  font-size: 1.1rem;
+  color: $pure-white;
+  margin: 0;
+  font-weight: 600;
+  flex: 1;
+
+  @include respond-to(tablet) {
+    font-size: 1rem;
+  }
+}
+
+.accordionIcon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $primary-blue;
+    transition: all 0.3s ease;
+
+    &:first-child {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    &:last-child {
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.accordionContent {
+  overflow: hidden;
+}
+
+.answer {
+  padding: 0 $spacing-unit * 3 $spacing-unit * 3;
+  color: rgba($pure-white, 0.8);
+  line-height: 1.6;
+
+  @include respond-to(tablet) {
+    padding: 0 $spacing-unit * 2 $spacing-unit * 2;
+    font-size: 0.95rem;
+  }
+}
