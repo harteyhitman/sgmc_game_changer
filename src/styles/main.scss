@@ -1,13 +1,8 @@
-// Abstracts
-@import "../styles/abstract/variables";
-@import '../styles/abstract/mixins';
-
-// Base
-@import '../styles/base/reset';
-@import '../styles/base/typography';
-
-@import "tailwindcss";
-
+@use "../styles/abstract/variables" as *;
+@use "../styles/abstract/mixins" as *;
+@use "../styles/base/reset";
+@use "../styles/base/typography";
+@use "tailwindcss";
 * {
   margin: 0;
   padding: 0;

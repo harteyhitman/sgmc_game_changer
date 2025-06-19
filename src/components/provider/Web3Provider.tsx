@@ -1,12 +1,19 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { ethers } from 'ethers';
 
-// Extend the Window interface to include ethereum
+// Define proper types for Ethereum provider events
+type EthereumEventCallback = (...args: unknown[]) => void;
+
+interface EthereumProvider extends ethers.Eip1193Provider {
+  on(event: string, listener: EthereumEventCallback): this;
+  removeListener(event: string, listener: EthereumEventCallback): this;
+}
+
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: EthereumProvider;
   }
 }
 
@@ -16,6 +23,7 @@ type Web3ContextType = {
   account: string | null;
   isConnected: boolean;
   chainId: number | null;
+  provider: ethers.BrowserProvider | null;
 };
 
 const Web3Context = createContext<Web3ContextType>({
@@ -24,23 +32,48 @@ const Web3Context = createContext<Web3ContextType>({
   account: null,
   isConnected: false,
   chainId: null,
+  provider: null,
 });
 
 export function Web3Provider({ children }: { children: React.ReactNode }) {
   const [account, setAccount] = useState<string | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
+  const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
 
-  const connectWallet = async () => {
+  const disconnectWallet = useCallback(() => {
+    setAccount(null);
+    setChainId(null);
+    setProvider(null);
+    if (window.ethereum) {
+      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      window.ethereum.removeListener('chainChanged', handleChainChanged);
+    }
+  }, []);
+
+  const handleAccountsChanged = useCallback((accounts: unknown) => {
+    const accountsArray = accounts as string[];
+    if (accountsArray.length === 0) {
+      disconnectWallet();
+    } else {
+      setAccount(accountsArray[0]);
+    }
+  }, [disconnectWallet]);
+
+  const handleChainChanged = useCallback((chainId: unknown) => {
+    setChainId(Number(chainId));
+  }, []);
+
+  const connectWallet = useCallback(async () => {
     if (window.ethereum) {
       try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const accounts = await provider.send("eth_requestAccounts", []);
-        const network = await provider.getNetwork();
+        const newProvider = new ethers.BrowserProvider(window.ethereum);
+        const accounts = await newProvider.send("eth_requestAccounts", []);
+        const network = await newProvider.getNetwork();
         
         setAccount(accounts[0]);
         setChainId(Number(network.chainId));
+        setProvider(newProvider);
         
-        // Set up listeners
         window.ethereum.on('accountsChanged', handleAccountsChanged);
         window.ethereum.on('chainChanged', handleChainChanged);
       } catch (error) {
@@ -49,39 +82,51 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
     } else {
       alert("Please install MetaMask!");
     }
-  };
+  }, [handleAccountsChanged, handleChainChanged]);
 
-  const disconnectWallet = () => {
-    setAccount(null);
-    setChainId(null);
-    if (window.ethereum) {
-      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-      window.ethereum.removeListener('chainChanged', handleChainChanged);
-    }
-  };
+  // Initialize provider and check connection status
+  useEffect(() => {
+    const init = async () => {
+      if (window.ethereum) {
+        try {
+          const newProvider = new ethers.BrowserProvider(window.ethereum);
+          const accounts = await newProvider.send("eth_accounts", []);
+          const network = await newProvider.getNetwork();
+          
+          if (accounts.length > 0) {
+            setAccount(accounts[0]);
+            setChainId(Number(network.chainId));
+            setProvider(newProvider);
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+            window.ethereum.on('chainChanged', handleChainChanged);
+          }
+        } catch (error) {
+          console.error("Error initializing wallet:", error);
+        }
+      }
+    };
 
-  const handleAccountsChanged = (accounts: string[]) => {
-    if (accounts.length === 0) {
-      disconnectWallet();
-    } else {
-      setAccount(accounts[0]);
-    }
-  };
+    init();
 
-  const handleChainChanged = (chainId: string) => {
-    setChainId(Number(chainId));
-  };
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('chainChanged', handleChainChanged);
+      }
+    };
+  }, [handleAccountsChanged, handleChainChanged]);
+
+  const contextValue = useMemo(() => ({
+    connectWallet,
+    disconnectWallet,
+    account,
+    isConnected: !!account,
+    chainId,
+    provider,
+  }), [connectWallet, disconnectWallet, account, chainId, provider]);
 
   return (
-    <Web3Context.Provider
-      value={{
-        connectWallet,
-        disconnectWallet,
-        account,
-        isConnected: !!account,
-        chainId,
-      }}
-    >
+    <Web3Context.Provider value={contextValue}>
       {children}
     </Web3Context.Provider>
   );

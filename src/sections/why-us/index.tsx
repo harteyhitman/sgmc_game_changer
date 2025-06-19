@@ -6,26 +6,31 @@ export default function WhyUsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(styles.visible);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+// why-us/index.tsx
+useEffect(() => {
+  const currentSection = sectionRef.current;
+  const currentCards = cardRefs.current;
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    cardRefs.current.forEach((card) => card && observer.observe(card));
+  if (!currentSection) return;
 
-    return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-      cardRefs.current.forEach((card) => card && observer.unobserve(card));
-    };
-  }, []);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add(styles.visible);
+      } else {
+        entry.target.classList.remove(styles.visible);
+      }
+    });
+  });
+
+  observer.observe(currentSection);
+  currentCards.forEach(card => card && observer.observe(card));
+
+  return () => {
+    observer.unobserve(currentSection);
+    currentCards.forEach(card => card && observer.unobserve(card));
+  };
+}, []);
 
   const reasons = [
     {

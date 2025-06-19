@@ -1,9 +1,10 @@
+@use "sass:color";
 @use "../../styles/abstract/variables"as *;
 @use "../../styles/abstract/mixins" as *;
 
 .roadmap {
   padding: $spacing-unit * 10 0;
-  background-color: darken($primary-dark, 2%);
+background-color: color.adjust($primary-dark, $lightness: -2%);
   position: relative;
   overflow: hidden;
 

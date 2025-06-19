@@ -6,26 +6,30 @@ export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(styles.visible);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+useEffect(() => {
+  const currentSection = sectionRef.current;
+  const currentServices = serviceRefs.current;
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    serviceRefs.current.forEach((service) => service && observer.observe(service));
+  if (!currentSection) return;
 
-    return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-      serviceRefs.current.forEach((service) => service && observer.unobserve(service));
-    };
-  }, []);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add(styles.visible);
+      } else {
+        entry.target.classList.remove(styles.visible);
+      }
+    });
+  });
+
+  observer.observe(currentSection);
+  currentServices.forEach(service => service && observer.observe(service));
+
+  return () => {
+    observer.unobserve(currentSection);
+    currentServices.forEach(service => service && observer.unobserve(service));
+  };
+}, []);
 
   const services = [
     {

@@ -1,12 +1,25 @@
 'use client'
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import styles from './aboutUs.module.scss';
+
+interface Feature {
+  title: string;
+  description: string;
+  icon: string;
+}
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
+  const animationRefs = useRef<NodeJS.Timeout[]>([]);
 
+  // Intersection Observer for section and cards
   useEffect(() => {
+    const currentSection = sectionRef.current;
+    const currentCards = cardsRef.current;
+    
+    if (!currentSection) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -18,54 +31,62 @@ export default function AboutSection() {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    cardsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
+    observer.observe(currentSection);
+    currentCards.forEach((card) => card && observer.observe(card));
 
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-      cardsRef.current.forEach((card) => {
-        if (card) observer.unobserve(card);
-      });
+      observer.unobserve(currentSection);
+      currentCards.forEach((card) => card && observer.unobserve(card));
     };
   }, []);
-useEffect(() => {
-  if (!sectionRef.current) return;
 
-  const statNumbers = sectionRef.current.querySelectorAll(`.${styles.statNumber}`);
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        statNumbers.forEach((number) => {
-          const target = parseInt(number.getAttribute('data-count') || '0');
-          const duration = 2000;
-          const start = 0;
-          const increment = target / (duration / 16);
-          
-          let current = start;
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-              clearInterval(timer);
-              current = target;
-            }
-            number.textContent = Math.floor(current).toString();
-          }, 16);
-        });
-      }
-    });
-  }, { threshold: 0.5 });
+  // Counter animation effect
+  useEffect(() => {
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
 
-  observer.observe(sectionRef.current);
+    const animateCounters = () => {
+      const statNumbers = currentSection.querySelectorAll<HTMLElement>(`.${styles.statNumber}`);
+      
+      statNumbers.forEach((number) => {
+        const target = parseInt(number.dataset.count || '0');
+        const duration = 2000;
+        const start = 0;
+        const increment = target / (duration / 16);
+        
+        let current = start;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            clearInterval(timer);
+            current = target;
+          }
+          number.textContent = Math.floor(current).toString();
+        }, 16);
+        
+        animationRefs.current.push(timer);
+      });
+    };
 
-  return () => observer.disconnect();
-}, []);
-  const features = [
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounters();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(currentSection);
+
+    return () => {
+      observer.disconnect();
+      animationRefs.current.forEach(timer => clearInterval(timer));
+      animationRefs.current = [];
+    };
+  }, []);
+
+  // Type-safe feature cards
+  const features: Feature[] = [
     {
       title: "Innovation",
       description: "Pushing boundaries with cutting-edge blockchain solutions",
@@ -87,6 +108,13 @@ useEffect(() => {
       icon: "🔍"
     }
   ];
+
+  // Memoized card ref callback
+  const setCardRef = useCallback((index: number) => (el: HTMLDivElement | null) => {
+    if (el) {
+      cardsRef.current[index] = el;
+    }
+  }, []);
 
   return (
     <section id="about" ref={sectionRef} className={styles.about}>
@@ -141,9 +169,7 @@ useEffect(() => {
             {features.map((feature, index) => (
               <div 
                 key={index}
-                ref={(el) => {
-                  if (el) cardsRef.current[index] = el;
-                }}
+                ref={setCardRef(index)}
                 className={styles.featureCard}
               >
                 <div className={styles.cardIcon}>{feature.icon}</div>

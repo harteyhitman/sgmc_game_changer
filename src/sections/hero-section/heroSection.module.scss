@@ -168,8 +168,8 @@
     }
     100% {
       transform: 
-        translate(calc(var(--x-start) + random(100) - 50%), 
-        calc(var(--y-start) + random(100) - 50%)) 
+      translate(calc(var(--x-start) + math.random(100) - 50%),
+        calc(var(--y-start) + math.random(100) - 50%))
         scale(0);
       opacity: 0;
     }

@@ -1,12 +1,14 @@
-// components/WhyUsSection.module.scss
+@use "sass:color";
 @use "../../styles/abstract/variables" as *;
 @use "../../styles/abstract/mixins" as *;
 
 .whyUs {
   position: relative;
   padding: 8rem 0;
-  background: linear-gradient(to bottom, darken($primary-dark, 5%), darken($primary-dark, 8%));
-  overflow: hidden;
+background: linear-gradient(to bottom, 
+  color.adjust($primary-dark, $lightness: -5%), 
+  color.adjust($primary-dark, $lightness: -8%));
+    overflow: hidden;
 
   .background {
     position: absolute;
