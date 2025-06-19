@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useEffect } from 'react';
 import styles from './whyUs.module.scss';
+import { FcAlarmClock } from "react-icons/fc";
 
 export default function WhyUsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -51,7 +52,7 @@ useEffect(() => {
     {
       title: "24/7 Support",
       description: "Dedicated support team available around the clock to assist you.",
-      icon: "🛟"
+      icon: "⏰"
     }
   ];
 
