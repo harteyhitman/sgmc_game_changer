@@ -23,7 +23,9 @@
   .brand {
     flex: 1;
     min-width: 300px;
-
+    @include respond-to(mobile){
+min-width: 200px;
+    }
     .logo {
       font-size: 2rem;
       font-weight: 700;

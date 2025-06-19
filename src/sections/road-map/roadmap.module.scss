@@ -228,3 +228,9 @@ background-color: color.adjust($primary-dark, $lightness: -2%);
     opacity: 0;
   }
 }
+
+  @include respond-to(mobile) {
+    .title{
+      font-size: 1.5rem;
+    }
+  }

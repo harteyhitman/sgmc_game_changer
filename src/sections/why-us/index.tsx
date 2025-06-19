@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useEffect } from 'react';
 import styles from './whyUs.module.scss';
+import Button from '@/components/ui/button';
 
 export default function WhyUsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -94,10 +95,10 @@ useEffect(() => {
         </div>
 
         <div className={styles.ctaContainer}>
-          <button className={styles.ctaButton}>
+          <Button>
             <span>Get Started</span>
             <div className={styles.buttonHoverEffect}></div>
-          </button>
+          </Button>
         </div>
       </div>
     </section>

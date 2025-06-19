@@ -4,7 +4,7 @@
 
 .whyUs {
   position: relative;
-  padding: 8rem 0;
+  padding: 4rem 0;
 background: linear-gradient(to bottom, 
   color.adjust($primary-dark, $lightness: -5%), 
   color.adjust($primary-dark, $lightness: -8%));
@@ -28,6 +28,7 @@ background: linear-gradient(to bottom,
         width: 400px;
         height: 400px;
         background: $accent-green;
+        opacity: 0.2;
         top: -150px;
         left: -150px;
         animation: float 20s ease-in-out infinite;
@@ -37,6 +38,7 @@ background: linear-gradient(to bottom,
         width: 500px;
         height: 500px;
         background: $primary-blue;
+        opacity: 0.2;
         bottom: -200px;
         right: -200px;
         animation: float 25s ease-in-out infinite reverse;
@@ -270,4 +272,45 @@ background: linear-gradient(to bottom,
   100% {
     transform: translate(0, 0);
   }
+}
+
+@include respond-to(mobile) {
+  .orb {
+      position: absolute;
+      border-radius: 100%;
+      filter: blur(100px);
+    //   opacity: 0.1;
+
+      &:first-child {
+        width: 300px;
+        height: 400px;
+        background: $accent-green;
+        opacity: 0.2;
+        top: -150px;
+        left: -150px;
+        animation: float 20s ease-in-out infinite;
+      }
+
+      &:last-child {
+        width: 300px;
+        height: 300px;
+        background: $primary-blue;
+        bottom: -200px;
+        right: -200px;
+        opacity: 0.2;
+        animation: float 25s ease-in-out infinite reverse;
+      }
+    }
+    .whyUs{
+      padding: 2rem 0;
+    }
+    .ctaContainer{
+      margin-bottom: 30px;
+    }
+    .titleLine{
+      font-size: 1.5rem;
+    }
+    .titleLineAccent{
+      font-size: 1.5rem;
+    }
 }

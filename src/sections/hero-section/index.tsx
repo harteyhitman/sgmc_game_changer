@@ -3,6 +3,7 @@
 // components/HeroSection.tsx
 import { useEffect, useRef } from 'react';
 import styles from './heroSection.module.scss';
+import Button from '@/components/ui/button';
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -72,14 +73,14 @@ export default function HeroSection() {
         </p>
         
         <div className={styles.ctaContainer}>
-          <button className={styles.ctaPrimary}>
+          <Button className={styles.ctaPrimary}>
             <span>Get Started</span>
             <div className={styles.hoverEffect}></div>
-          </button>
-          <button className={styles.ctaSecondary}>
+          </Button>
+          <Button className={styles.ctaSecondary}>
             <span>Learn More</span>
             <div className={styles.hoverEffect}></div>
-          </button>
+          </Button>
         </div>
       </div>
       
