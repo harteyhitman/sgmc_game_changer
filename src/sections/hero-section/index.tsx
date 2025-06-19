@@ -2,7 +2,7 @@
 
 // components/HeroSection.tsx
 import { useEffect, useRef } from 'react';
-import styles from './HeroSection.module.scss';
+import styles from './heroSection.module.scss';
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
