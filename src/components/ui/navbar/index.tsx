@@ -5,6 +5,7 @@ import styles from './navbar.module.scss';
 import Link from 'next/link';
 import { useWeb3 } from '@/components/provider/Web3Provider';
 import { shortenAddress } from '@/utils/web3';
+import ThemeToggle from '../theme-toggle';
 
 export default function Navbar() {
   const { connectWallet, disconnectWallet, account, isConnected } = useWeb3();
@@ -35,6 +36,8 @@ export default function Navbar() {
   };
 
   return (
+    <div className={styles.actions}>
+  <ThemeToggle />
     <nav 
       ref={navbarRef} 
       className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}
@@ -117,5 +120,7 @@ export default function Navbar() {
         </button>
       </div>
     </nav>
+</div>
+  
   );
 }

@@ -1,0 +1,36 @@
+@use './abstracts/variables' as *;
+
+:root {
+  // Dark theme (default)
+  --background-primary: #{$primary-dark};
+  --background-secondary: #{darken($primary-dark, 3%)};
+  --background-tertiary: #{darken($primary-dark, 5%)};
+  --text-primary: #{$pure-white};
+  --text-secondary: #{rgba($pure-white, 0.8)};
+  --text-tertiary: #{rgba($pure-white, 0.6)};
+  --border-color: #{rgba($pure-white, 0.1)};
+  --card-bg: #{rgba($pure-white, 0.05)};
+  --card-hover: #{rgba($pure-white, 0.08)};
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --primary-gradient: linear-gradient(90deg, #{$primary-blue}, #{$accent-green});
+}
+
+[data-theme="light"] {
+  --background-primary: #f8f9fa;
+  --background-secondary: #{lighten($primary-dark, 80%)};
+  --background-tertiary: #{lighten($primary-dark, 75%)};
+  --text-primary: #{$primary-dark};
+  --text-secondary: #{rgba($primary-dark, 0.8)};
+  --text-tertiary: #{rgba($primary-dark, 0.6)};
+  --border-color: #{rgba($primary-dark, 0.1)};
+  --card-bg: #{rgba($primary-dark, 0.03)};
+  --card-hover: #{rgba($primary-dark, 0.05)};
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+// Global styles
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

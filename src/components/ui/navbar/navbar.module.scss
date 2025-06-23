@@ -1,6 +1,11 @@
 @use "../../../styles/abstract/variables" as *;
 @use "../../../styles/abstract/mixins" as *;
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-unit * 2;
+}
 .navbar {
   position: fixed;
   top: 0;

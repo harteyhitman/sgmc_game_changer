@@ -15,7 +15,8 @@
   justify-content: center;
   color: white;
   background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  
+  //   background-color: var(--background-primary);
+  // color: var(--text-primary);
   &::before {
     content: '';
     position: absolute;
